@@ -1,5 +1,5 @@
-OBJS = project03.o
-PROG = project03
+OBJS = Play.o
+PROG = Play
 
 %.o: %.c
 	gcc -c -g -o $@ $<

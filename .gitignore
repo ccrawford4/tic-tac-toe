@@ -4,3 +4,6 @@
 # Ignore compiled binaries, executables, and output files
 *.out
 *.exe
+
+# Ignore the output file without extension
+Play

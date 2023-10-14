@@ -205,19 +205,6 @@ bool isBoardEmpty(char **board, int size) { // Iterates through the board to see
   return true; // Returns true if all the chars are underscores
 }
 
-void printWinner(int val) { // Uses the val passed to print the associated player that won
-  switch (val) {
-  case 1:
-    printf("X Wins\n");
-    break;
-  case -1:
-    printf("O Wins\n");
-    break;
-  case 0:
-    printf("Draw\n");
-    break;
-  }
-}
 
 // Minimax algorithm to calculate scores of a move
 int minimax(char **board, int size, int depth, int alpha, int beta, bool maximizingPlayer) {
