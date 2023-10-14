@@ -41,7 +41,8 @@ void printBoard(char **board, int size) {
         printf(" %c\n", board[r][c]);
       }
     }
-    int patternLength = size - 1; // Variable used to create a pattern for dynamic lengths
+    int patternLength =
+        size - 1; // Variable used to create a pattern for dynamic lengths
     if (r < patternLength) {
       for (int i = 0; i < patternLength; i++) {
         printf("---+");
@@ -51,13 +52,15 @@ void printBoard(char **board, int size) {
   }
 }
 
-char **createBoard(int size) { 
-  char **board = (char **)malloc(size * sizeof(char *)); // Allocates memory for the board
+char **createBoard(int size) {
+  char **board =
+      (char **)malloc(size * sizeof(char *)); // Allocates memory for the board
   if (board == NULL) {
     printf("Memory allocation failed\n");
     exit(-1);
   }
-  for (int i = 0; i < size; i++) { // Iterates through the board to allocate memory for the columns
+  for (int i = 0; i < size;
+       i++) { // Iterates through the board to allocate memory for the columns
     board[i] = (char *)malloc(size * sizeof(char));
     if (board[i] == NULL) {
       printf("Memory allocation failed\n");
@@ -69,7 +72,7 @@ char **createBoard(int size) {
     for (int c = 0; c < size; c++) {
       board[r][c] = EMPTY;
     }
- }
+  }
   return board; // Returns the newley created board
 }
 
@@ -128,7 +131,8 @@ bool isValid(char **board, int size, int row, int col) {
     }
 
     bool fillsDiagRight = true;
-    for (int r = 0, c = 0; r < size && c < size; r++, c++) { // Iterates through the right pointing diagonal
+    for (int r = 0, c = 0; r < size && c < size;
+         r++, c++) { // Iterates through the right pointing diagonal
       if (board[r][c] != val) {
         fillsDiagRight = false;
         break;
@@ -139,7 +143,8 @@ bool isValid(char **board, int size, int row, int col) {
     }
 
     bool fillsDiagLeft = true;
-    for (int r = 0, c = size - 1; r < size && c >= 0; r++, c--) { // Performs same operation for anti-diagonal
+    for (int r = 0, c = size - 1; r < size && c >= 0;
+         r++, c--) { // Performs same operation for anti-diagonal
       if (board[r][c] != val) {
         fillsDiagLeft = false;
         break;
@@ -165,7 +170,9 @@ int checkForTerminalState(char **board, int row, int size, bool hasEmpty) {
       hasEmpty = true; // Boolean to keep track if there are still empty spaces
                        // available
     }
-    if (board[row][c] != EMPTY && isValid(board, size, row, c)) { // Checks to see if there is a win for this char
+    if (board[row][c] != EMPTY &&
+        isValid(board, size, row,
+                c)) { // Checks to see if there is a win for this char
       switch (board[row][c]) {
       case 'X': // Returns the integers associated with the character that won
         return 1;
@@ -179,7 +186,9 @@ int checkForTerminalState(char **board, int row, int size, bool hasEmpty) {
   return checkForTerminalState(board, row + 1, size, hasEmpty); // Otherwise search the next row recursively
 }
 
-bool isBoardEmpty(char **board, int size) { // Iterates through the board to see if it is empty
+bool isBoardEmpty(
+    char **board,
+    int size) { // Iterates through the board to see if it is empty
   for (int r = 0; r < size; r++) {
     for (int c = 0; c < size; c++) {
       if (board[r][c] != EMPTY) {
@@ -191,10 +200,9 @@ bool isBoardEmpty(char **board, int size) { // Iterates through the board to see
   return true; // Returns true if all the chars are underscores
 }
 
-
 // Minimax algorithm to calculate scores of a move
 int minimax(char **board, int size, int depth, int alpha, int beta, bool maximizingPlayer) {
-  int result = checkForTerminalState(board, 0, size, false); // First checks to see if the board is full or someone won
+  int result = checkForTerminalState(board, 0, size, false);         // First checks to see if the board is full or someone won
   if (result != -2) { // If someone won or its a draw (ie the function did not
                       // indicate to keep playing)
     switch (result) {
@@ -215,14 +223,18 @@ int minimax(char **board, int size, int depth, int alpha, int beta, bool maximiz
       for (int c = 0; c < size; c++) {
         if (board[r][c] == EMPTY) { // Only play a move if the space is empty
           board[r][c] = 'X';        // If it is maximizer then play an 'X'
-          int score = minimax(board, size, depth + 1, alpha, beta, false); // Get the score recursively by letting
-                                                                          // 'O' play the next move
-          board[r][c] = EMPTY; // Unassign the move to keep searching for the best move
-          maxScore = max(maxScore, score); // Assign the max score with the correct value
+          int score = minimax(board, size, depth + 1, alpha, beta,
+                              false); // Get the score recursively by letting
+                                      // 'O' play the next move
+          board[r][c] =
+              EMPTY; // Unassign the move to keep searching for the best move
+          maxScore = max(maxScore,
+                         score); // Assign the max score with the correct value
           alpha = max(alpha, score); // Alpha variable is used to keep track of
                                      // the current largest score in the tree
-          if (beta <= alpha) { // If the beta is less than or equal to the head then we
-                               // found the optimal choice and so we can stop searching
+          if (beta <=
+              alpha) { // If the beta is less than or equal to the head then we
+                       // found the optimal choice and so we can stop searching
             break;
           }
         }
@@ -236,8 +248,9 @@ int minimax(char **board, int size, int depth, int alpha, int beta, bool maximiz
       for (int c = 0; c < size; c++) {
         if (board[r][c] == EMPTY) {
           board[r][c] = 'O'; // Places an O in an empty spot
-          int score = minimax(board, size, depth + 1, alpha, beta, true); // Plays next move
-          board[r][c] = EMPTY; // Undoes the move so we can try a new move
+          int score = minimax(board, size, depth + 1, alpha, beta,
+                              true); // Plays next move
+          board[r][c] = EMPTY;       // Undoes the move so we can try a new move
           minScore = min(minScore, score); // Calculates the minimum score
           beta = min(beta, minScore);      // Calculates beta
           if (beta <= alpha) { // If beta <= alpha then we found the optimal
@@ -293,17 +306,18 @@ move_t findBestMove(char **board, int size, bool isMaximizer) { // Returns the b
     }
   }
 
-  return bestMove; // Returns the best move after evaluating all the potential spots
+  return bestMove; // Returns the best move after evaluating all the potential
+                   // spots
 }
 
-void placeMove(char **board, move_t *move, bool isMaximizer) { // Places a move on the board
-  char val =
-      (isMaximizer) ? 'X' : 'O'; // Initalizes the val depending on whos playing
+void placeMove(char **board, move_t *move, bool isMaximizer) { // Places a move on the bo
+  char val = (isMaximizer) ? 'X' : 'O'; // Initalizes the val depending on whos playing
   board[move->row][move->column] = val; // Plays the move
 }
 
-void playGame(char **board, int size, char player) { // Play game   
-  bool isMaximizer = 'X' ? true : false;
+void playGame(char **board, int size, char player) { // Play game
+ bool isMaximizer = (player == 'X') ? true : false;
+ char currentPlayer = player;
   while (true) {
     int check = checkForTerminalState(board, 0, size, false); // Checks to see if game is in terminal state
     if (check != -2) {          // If the game is in terminal state
@@ -314,20 +328,23 @@ void playGame(char **board, int size, char player) { // Play game
 
     move_t currentMove; // Initalize current move variable
 
-    if (isMaximizer) { // If is maximizer then use minimax algorithm to find and
+    if (currentPlayer == player) { // If is maximizer then use minimax algorithm to find and
                        // place the best move
       printBoard(board, size); // Print the board only when the user takes a turn
       printf("\n");
       int r, c; // Will hold the row and column values that the user pases
       bool validInput = false;
       do {
-        printf("X: ");
+        printf("%c: ", player);
         if (fscanf(stdin, "%d %d", &r, &c) != 2) { // Gets user import
           printf("ERROR! Please enter two integers.\n");
-          while (fgetc(stdin) != '\n'); // cleans up the input to not include any newlines
-        } else if (r < 0 || r >= size || c < 0 || c >= size) { // Accounts for if the user input is not in the
-                                                               // bounds of the board
-          printf("ERROR! Row and column must be within the bounds of the board.\n");
+          while (fgetc(stdin) != '\n')
+            ; // cleans up the input to not include any newlines
+        } else if (r < 0 || r >= size || c < 0 ||
+                   c >= size) { // Accounts for if the user input is not in the
+                                // bounds of the board
+          printf("ERROR! Row and column must be within the bounds of the "
+                 "board.\n");
         } else if (board[r][c] != EMPTY) {
           printf("ERROR! That spot is already taken.\n"); // Accounts for if the
                                                           // move is not on an
@@ -344,6 +361,7 @@ void playGame(char **board, int size, char player) { // Play game
       currentMove = findBestMove(board, size, isMaximizer);
     }
     placeMove(board, &currentMove, isMaximizer); // Places the move
+    currentPlayer = (currentPlayer == 'X') ? 'O': 'X';
     isMaximizer = !isMaximizer; // Resets whos playing every time
   }
 }
@@ -363,27 +381,40 @@ int convertCharToInt(char *character) { // Takes in a character pointer and
                  // the character
 }
 
+void intro() {
+  printf("         Welcome to Tic-Tac-Toe!\n");
+
+  char player;
+  bool validPlayer = false;
+  int size;
+
+  do {
+    printf("Please enter who you would like to play as (X or O): ");
+    scanf(" %c", &player);
+    if (player == 'X' || player == 'x' || player == 'O' || player == 'o') {
+      validPlayer = true;
+    } else {
+      printf("Invalid input! %c Is not a valid player.\n", player);
+    }
+  } while (!validPlayer);
+
+  bool validSize = false;
+
+  do {
+    printf("Please enter the board size (3 or 4): ");
+    scanf("%d", &size);
+    if (size >= 3 && size <= 4) {
+      validSize = true;
+    } else {
+      printf("Invalid input! %d Is not a valid board size.\n", size);
+    }
+  } while (!validSize);
+
+  char **board = createBoard(size); 
+  playGame(board, size, player);
+  freeBoard(board, size);
+}
+
 int main(int argc, char *argv[]) {
-  int size; // Booleans responsible for how the game will be played
-  char player = 'X';
-    
-  // Controls what values the booleans get assigned to based on the command line arguments
-  if (argc == 1) {
-    size = DEFAULT_SIZE;
-   }
-   else if (argc == 2) {
-    size = convertCharToInt(argv[2]);
-   }
-   else if (argc == 3) {
-    size = convertCharToInt(argv[2]);
-    player = *argv[3];
-   }
-   else {
-    printf("ERROR! Invalid Command Line Argumeents.\n");
-    exit(-1);
-   } 
-  
-  char **board = createBoard(size); // Creates the board
-  playGame(board, size, player); // Plays the game
-  freeBoard(board, size); // Frees the board when done
+    intro();
 }

@@ -41,7 +41,7 @@ Follow these steps to get started with the Tic-Tac-Toe game:
   ``cd tic-tac-toe``
 
 3. Compile the code using the provided ``Makefile``. If you don't have 
-[GCC] (https://gcc.gnu.org/install/) or [Make] (https://www.gnu.org/software/make/) installed
+[GCC](https://gcc.gnu.org/install/) or [Make](https://www.gnu.org/software/make/) installed
 then do that.
    To perform the compilation just type: ``$ make`` into your command line.
 
@@ -56,3 +56,9 @@ then do that.
     directory, you can use the collowing command:
     ``make clean``
     This will remove any generated object files and executables.
+
+## Example Gameplay: 
+
+![3x3 Gameplay](./3x3-Play.png);
+
+![4x4 Gameplay](./4x4-Play.png);
