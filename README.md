@@ -12,16 +12,22 @@ competitive people out there!).
 ## Gameplay
 
 To play the game, you need to enter your move as two integer inputs representing
-the row and column where you want to place your mark.(X or O). For example, to
+the row and column where you want to place your mark (X or O). For example, to
 place your mark in the top-left corner, you would input `0 0`, and to place it
 in the middle, you would input `1 1`.The game continues until one player wins or
-it's a draw.
+it's a draw. Note: You can also choose to play on a 4x4 grid but for the first
+couple moves it will take longer than usual for the computer to choose an optimal
+position.
 
 ## Implementation
 
 The project is written in C and focuses on efficient memory allocation and
 deallocation to minimize resource usage. The minimax algorithm is used to determine
-the computer's moves, ensuring a high level of difficulty for human players.
+the computer's moves, ensuring a high level of difficulty for human players. Additionally,
+this particular implementation of minimax uses alpha-beta pruning to optimize performance.
+After the algorithm recursively finds optimal moves for both players then it will stop searching 
+and place the player on said square. This reduces the number of comparisons you have to make and 
+speeds up the amount of time it takes to choose a position.
 
 ### Memory Allocation and Deallocation
 
