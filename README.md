@@ -11,7 +11,7 @@ competitive people out there!).
 
 ## Gameplay
 
-To play the game, you need to enter yourmove as two integer inputs representing
+To play the game, you need to enter your move as two integer inputs representing
 the row and column where you want to place your mark.(X or O). For example, to
 place your mark in the top-left corner, you would input `0 0`, and to place it
 in the middle, you would input `1 1`.The game continues until one player wins or
