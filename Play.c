@@ -51,7 +51,7 @@ void printBoard(char **board, int size) {
   }
 }
 
-char **createBoard(char *argv[], int size, bool newBoard) { 
+char **createBoard(int size) { 
   char **board = (char **)malloc(size * sizeof(char *)); // Allocates memory for the board
   if (board == NULL) {
     printf("Memory allocation failed\n");
@@ -64,26 +64,12 @@ char **createBoard(char *argv[], int size, bool newBoard) {
       exit(-1);
     }
   }
-  int index = 1; // Start index gets changed depending on if we are using a larger than 3 sized board
-  if (size > DEFAULT_SIZE) {
-    index = 3;
-  }
   for (int r = 0; r < size; r++) { // Iterates through the rows and columns to
                                    // fill the board from the command line
     for (int c = 0; c < size; c++) {
-      if (newBoard) {
-        board[r][c] = EMPTY;
-      }
-      else {
-        if (*argv[index] != 'X' && *argv[index] != 'O' && *argv[index] != EMPTY) {
-            printf("ERROR! %c Is an Invalid Character for Tic Tac Toe\n", *argv[index]);
-            exit(-1);
-        }
-        board[r][c] = *argv[index++];
-      }
+      board[r][c] = EMPTY;
     }
  }
-
   return board; // Returns the newley created board
 }
 
@@ -103,13 +89,13 @@ void freeBoard(char **board, int size) { // Frees the allocated memory from the 
 void displayWinner(int val) { // Prints the winner depending on the value passed
   switch (val) {
   case -1:
-    printf("O Wins\n");
+    printf("\nO Wins!\n");
     break;
   case 1:
-    printf("X Wins\n");
+    printf("\nX Wins!\n");
     break;
   default:
-    printf("Draw\n");
+    printf("\nDraw\n");
     break;
   }
 }
@@ -316,20 +302,14 @@ void placeMove(char **board, move_t *move, bool isMaximizer) { // Places a move 
   board[move->row][move->column] = val; // Plays the move
 }
 
-void playGame(char **board, int size,bool interactive) { // Play game   
-  bool isMaximizer = true; // Initalies isMaximizer
+void playGame(char **board, int size, char player) { // Play game   
+  bool isMaximizer = 'X' ? true : false;
   while (true) {
     int check = checkForTerminalState(board, 0, size, false); // Checks to see if game is in terminal state
     if (check != -2) {          // If the game is in terminal state
       printBoard(board, size);  // Print the board
       displayWinner(check);     // Display the winner
       return;                   // End the function
-    }
-    if (!interactive) { // Ends the game if its not interactive and finds the best move for 'O'
-      printBoard(board, size);
-      move_t bestMove = findBestMove(board, size, false);
-      printf("O: %d %d\n", bestMove.row, bestMove.column);
-      return;
     }
 
     move_t currentMove; // Initalize current move variable
@@ -385,29 +365,25 @@ int convertCharToInt(char *character) { // Takes in a character pointer and
 
 int main(int argc, char *argv[]) {
   int size; // Booleans responsible for how the game will be played
-  bool interactive;
-  bool newBoard;
+  char player = 'X';
     
   // Controls what values the booleans get assigned to based on the command line arguments
   if (argc == 1) {
-    interactive = true;
-    newBoard = true;
     size = DEFAULT_SIZE;
-  } else if (argc == 10) {
-    interactive = false;
-    newBoard = false;
-    size = DEFAULT_SIZE;
-  } else if (argc > 10 && strncmp(argv[1], "-s", MAX_STR_LEN) == 0) {
-    interactive = false;
-    newBoard = false;
-    int number = convertCharToInt(argv[2]);
-    size = number;
-  } else {
+   }
+   else if (argc == 2) {
+    size = convertCharToInt(argv[2]);
+   }
+   else if (argc == 3) {
+    size = convertCharToInt(argv[2]);
+    player = *argv[3];
+   }
+   else {
     printf("ERROR! Invalid Command Line Argumeents.\n");
     exit(-1);
-  }
+   } 
   
-  char **board = createBoard(argv, size, newBoard); // Creates the board
-  playGame(board, size, interactive); // Plays the game
+  char **board = createBoard(size); // Creates the board
+  playGame(board, size, player); // Plays the game
   freeBoard(board, size); // Frees the board when done
 }
