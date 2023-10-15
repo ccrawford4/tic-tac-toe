@@ -49,7 +49,7 @@ Follow these steps to get started with the Tic-Tac-Toe game:
 3. Compile the code using the provided ``Makefile``. If you don't have 
 [GCC](https://gcc.gnu.org/install/) or [Make](https://www.gnu.org/software/make/) installed
 then do that.
-   To perform the compilation just type: ``$ make`` into your command line.
+   To perform the compilation just type: ``make`` into your command line and press enter.
 
 4. Run the game: 
   ``$ ./Play``
